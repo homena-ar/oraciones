@@ -16,14 +16,39 @@
 
     body {
       min-height: 100vh;
-      background: #0e0e11;
+      background: #0c0b0f;
       font-family: 'DM Sans', sans-serif;
       color: #f5f0e8;
       padding: 0;
+      position: relative;
+    }
+
+    /* Subtle ambient glow */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -20%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(200, 150, 60, 0.05) 0%, transparent 70%);
+      filter: blur(60px);
+      pointer-events: none;
+    }
+
+    /* Grain texture */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.4;
     }
 
     .header {
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(12, 11, 15, 0.85);
       border-bottom: 1px solid rgba(255, 255, 255, 0.06);
       padding: 18px 28px;
       display: flex;
@@ -32,8 +57,8 @@
       position: sticky;
       top: 0;
       z-index: 10;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
     }
 
     .header-left {
@@ -49,27 +74,30 @@
     }
 
     .badge {
-      background: rgba(200, 170, 110, 0.12);
-      border: 1px solid rgba(200, 170, 110, 0.2);
+      background: rgba(212, 188, 130, 0.1);
+      border: 1px solid rgba(212, 188, 130, 0.18);
       color: #d4bc82;
       padding: 3px 10px;
-      border-radius: 6px;
-      font-size: 0.75rem;
+      border-radius: 20px;
+      font-size: 0.73rem;
       font-weight: 500;
+      min-width: 28px;
+      text-align: center;
     }
 
     .header-actions {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       align-items: center;
     }
 
     .btn {
-      padding: 9px 16px;
+      padding: 8px 14px;
       border-radius: 8px;
-      border: none;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.03);
       font-family: 'DM Sans', sans-serif;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s ease;
@@ -77,99 +105,138 @@
       align-items: center;
       gap: 6px;
       text-decoration: none;
+      color: rgba(255, 255, 255, 0.45);
     }
 
-    .btn-ghost {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      color: rgba(255, 255, 255, 0.5);
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.75);
     }
 
-    .btn-ghost:hover {
-      background: rgba(255, 255, 255, 0.07);
-      color: rgba(255, 255, 255, 0.8);
+    .btn-accent {
+      background: rgba(212, 188, 130, 0.08);
+      border-color: rgba(212, 188, 130, 0.15);
+      color: rgba(212, 188, 130, 0.7);
+    }
+
+    .btn-accent:hover {
+      background: rgba(212, 188, 130, 0.14);
+      border-color: rgba(212, 188, 130, 0.25);
+      color: #d4bc82;
     }
 
     .btn-danger {
-      background: rgba(220, 80, 70, 0.1);
-      border: 1px solid rgba(220, 80, 70, 0.18);
-      color: rgba(220, 110, 100, 0.8);
-      padding: 6px 12px;
-      font-size: 0.75rem;
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.2);
+      padding: 6px 10px;
+      font-size: 0.73rem;
     }
 
     .btn-danger:hover {
-      background: rgba(220, 80, 70, 0.18);
-      color: rgba(220, 110, 100, 1);
+      color: rgba(220, 100, 90, 0.8);
+      background: rgba(220, 80, 70, 0.08);
     }
 
     .main {
-      max-width: 720px;
+      max-width: 680px;
       margin: 0 auto;
-      padding: 32px 24px;
+      padding: 32px 24px 60px;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .stats {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
-      margin-bottom: 32px;
+      margin-bottom: 36px;
     }
 
     .stat-card {
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(255, 255, 255, 0.025);
       border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 12px;
-      padding: 20px;
+      border-radius: 14px;
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 15%;
+      right: 15%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212, 188, 130, 0.15), transparent);
     }
 
     .stat-number {
-      font-size: 1.75rem;
-      font-weight: 600;
+      font-size: 2rem;
+      font-weight: 400;
       color: #d4bc82;
       font-family: 'DM Serif Display', serif;
+      line-height: 1;
     }
 
     .stat-label {
-      font-size: 0.75rem;
-      color: rgba(255, 255, 255, 0.3);
-      margin-top: 4px;
+      font-size: 0.73rem;
+      color: rgba(255, 255, 255, 0.25);
+      margin-top: 6px;
       font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
 
     .section-header {
       margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     .section-header h2 {
       font-family: 'DM Serif Display', serif;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 400;
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(255, 255, 255, 0.5);
     }
 
     .prayers-list {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
 
     .prayer-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 12px;
-      padding: 20px;
-      transition: border-color 0.2s ease;
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 14px;
+      padding: 22px;
+      transition: all 0.25s ease;
+      animation: slideIn 0.3s ease-out both;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .prayer-card:hover {
-      border-color: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.09);
+      background: rgba(255, 255, 255, 0.035);
     }
 
     .prayer-text {
       font-weight: 300;
-      line-height: 1.75;
-      color: rgba(255, 255, 255, 0.75);
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.7);
       font-size: 0.9rem;
       white-space: pre-wrap;
       word-break: break-word;
@@ -185,14 +252,27 @@
     }
 
     .prayer-date {
-      font-size: 0.73rem;
-      color: rgba(255, 255, 255, 0.2);
+      font-size: 0.72rem;
+      color: rgba(255, 255, 255, 0.18);
+      font-weight: 300;
     }
 
     .empty-state {
       text-align: center;
       padding: 60px 20px;
-      color: rgba(255, 255, 255, 0.25);
+    }
+
+    .empty-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 20px;
     }
 
     .empty-state h3 {
@@ -206,6 +286,7 @@
     .empty-state p {
       font-size: 0.85rem;
       font-weight: 300;
+      color: rgba(255, 255, 255, 0.2);
     }
 
     /* QR Modal */
@@ -213,9 +294,9 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       z-index: 100;
       align-items: center;
       justify-content: center;
@@ -226,24 +307,42 @@
     }
 
     .modal {
-      background: #17171c;
+      background: #141318;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 36px;
-      max-width: 380px;
+      max-width: 360px;
       width: 90%;
       text-align: center;
+      animation: modalIn 0.3s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .modal::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 15%;
+      right: 15%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212, 188, 130, 0.2), transparent);
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.95) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
     }
 
     .modal h3 {
       font-family: 'DM Serif Display', serif;
       font-size: 1.15rem;
       font-weight: 400;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .modal p {
-      color: rgba(255, 255, 255, 0.35);
+      color: rgba(255, 255, 255, 0.3);
       font-size: 0.8rem;
       font-weight: 300;
       margin-bottom: 24px;
@@ -251,10 +350,11 @@
 
     .qr-image {
       background: #fff;
-      border-radius: 12px;
-      padding: 14px;
+      border-radius: 14px;
+      padding: 16px;
       display: inline-block;
       margin-bottom: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
     }
 
     .qr-image img {
@@ -264,14 +364,15 @@
     }
 
     .url-display {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.07);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
       border-radius: 8px;
       padding: 10px 14px;
-      font-size: 0.8rem;
-      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.35);
       word-break: break-all;
       margin-bottom: 20px;
+      font-family: monospace;
     }
 
     .modal-actions {
@@ -282,36 +383,46 @@
 
     .loading {
       text-align: center;
-      padding: 40px;
-      color: rgba(255, 255, 255, 0.3);
-      font-size: 0.85rem;
+      padding: 50px;
+      color: rgba(255, 255, 255, 0.25);
+      font-size: 0.82rem;
+      font-weight: 300;
     }
 
     .loading-spinner {
-      width: 24px;
-      height: 24px;
-      border: 2px solid rgba(255, 255, 255, 0.08);
-      border-top-color: #d4bc82;
+      width: 22px;
+      height: 22px;
+      border: 2px solid rgba(255, 255, 255, 0.06);
+      border-top-color: rgba(212, 188, 130, 0.5);
       border-radius: 50%;
       animation: spin 0.7s linear infinite;
-      margin: 0 auto 10px;
+      margin: 0 auto 12px;
     }
 
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
 
+    /* Delete animation */
+    .prayer-card.removing {
+      animation: slideOut 0.3s ease-out forwards;
+    }
+
+    @keyframes slideOut {
+      to { opacity: 0; transform: translateX(-20px); height: 0; padding: 0; margin: 0; border: 0; overflow: hidden; }
+    }
+
     @media (max-width: 600px) {
       .header {
-        padding: 14px 18px;
+        padding: 14px 16px;
         flex-direction: column;
         gap: 12px;
       }
       .main {
-        padding: 24px 16px;
+        padding: 24px 16px 48px;
       }
       .prayer-card {
-        padding: 16px;
+        padding: 18px;
       }
       .modal {
         padding: 28px 20px;
@@ -326,13 +437,12 @@
       <span class="badge" id="count-badge">0</span>
     </div>
     <div class="header-actions">
-      <button class="btn btn-ghost" onclick="showQR()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-        QR
+      <button class="btn btn-accent" onclick="showQR()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3z"/><path d="M21 14h-1v3h-3v4h4v-7z"/><path d="M21 21h-3"/></svg>
+        Compartir
       </button>
-      <button class="btn btn-ghost" onclick="loadPrayers()">
+      <button class="btn" onclick="loadPrayers()">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-        Actualizar
       </button>
     </div>
   </div>
@@ -365,14 +475,14 @@
   <div class="modal-overlay" id="qr-modal">
     <div class="modal">
       <h3>Compartir</h3>
-      <p>Escaneá el QR o copiá el enlace</p>
+      <p>Escaneá el código o copiá el enlace</p>
       <div class="qr-image" id="qr-container">
         <div class="loading-spinner" style="margin:20px auto"></div>
       </div>
       <div class="url-display" id="url-display">Cargando...</div>
       <div class="modal-actions">
-        <button class="btn btn-ghost" onclick="copyUrl()">Copiar enlace</button>
-        <button class="btn btn-ghost" onclick="closeQR()">Cerrar</button>
+        <button class="btn btn-accent" onclick="copyUrl()">Copiar enlace</button>
+        <button class="btn" onclick="closeQR()">Cerrar</button>
       </div>
     </div>
   </div>
@@ -400,18 +510,20 @@
       if (prayers.length === 0) {
         container.innerHTML = `
           <div class="empty-state">
+            <div class="empty-icon">&#128591;</div>
             <h3>Sin oraciones todavía</h3>
             <p>Compartí el enlace para que las personas puedan escribir.</p>
           </div>`;
         return;
       }
 
-      container.innerHTML = prayers.map(p => `
-        <div class="prayer-card" id="prayer-${p.id}">
+      container.innerHTML = prayers.map((p, i) => `
+        <div class="prayer-card" id="prayer-${p.id}" style="animation-delay: ${i * 0.05}s">
           <div class="prayer-text">${escapeHtml(p.texto)}</div>
           <div class="prayer-footer">
             <span class="prayer-date">${formatDate(p.fecha)}</span>
             <button class="btn btn-danger" onclick="deletePrayer(${p.id})">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
               Eliminar
             </button>
           </div>
@@ -450,12 +562,18 @@
 
     async function deletePrayer(id) {
       if (!confirm('Eliminar esta oración?')) return;
+      const card = document.getElementById(`prayer-${id}`);
+      if (card) card.classList.add('removing');
+
       try {
         await fetch(`/api/oraciones/${id}`, { method: 'DELETE' });
-        prayers = prayers.filter(p => p.id !== id);
-        renderPrayers();
-        updateStats();
+        setTimeout(() => {
+          prayers = prayers.filter(p => p.id !== id);
+          renderPrayers();
+          updateStats();
+        }, 300);
       } catch (err) {
+        if (card) card.classList.remove('removing');
         alert('Error al eliminar.');
       }
     }
@@ -480,9 +598,10 @@
     function copyUrl() {
       if (siteUrl) {
         navigator.clipboard.writeText(siteUrl).then(() => {
-          const btn = event.target;
+          const btn = event.target.closest('.btn');
+          const original = btn.innerHTML;
           btn.textContent = 'Copiado!';
-          setTimeout(() => btn.textContent = 'Copiar enlace', 2000);
+          setTimeout(() => btn.innerHTML = original, 2000);
         });
       }
     }
