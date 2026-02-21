@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin - Oraciones sin respuestas</title>
+  <title>Admin - Oraciones</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -16,174 +16,161 @@
 
     body {
       min-height: 100vh;
-      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-      font-family: 'Inter', sans-serif;
-      color: #fff;
+      background: #0e0e11;
+      font-family: 'DM Sans', sans-serif;
+      color: #f5f0e8;
       padding: 0;
     }
 
     .header {
-      background: rgba(255, 255, 255, 0.03);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 20px 32px;
+      background: rgba(255, 255, 255, 0.02);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 18px 28px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
       position: sticky;
       top: 0;
       z-index: 10;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
 
     .header-left {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
     }
 
     .header h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-      font-weight: 600;
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.15rem;
+      font-weight: 400;
     }
 
     .badge {
-      background: rgba(168, 85, 247, 0.2);
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      color: #c4a1f7;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 0.8rem;
+      background: rgba(200, 170, 110, 0.12);
+      border: 1px solid rgba(200, 170, 110, 0.2);
+      color: #d4bc82;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
       font-weight: 500;
     }
 
     .header-actions {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       align-items: center;
     }
 
     .btn {
-      padding: 10px 20px;
-      border-radius: 10px;
+      padding: 9px 16px;
+      border-radius: 8px;
       border: none;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.85rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       text-decoration: none;
     }
 
     .btn-ghost {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.5);
     }
 
     .btn-ghost:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #7c5cbf 0%, #a855f7 100%);
-      color: #fff;
-    }
-
-    .btn-primary:hover {
-      box-shadow: 0 4px 15px rgba(120, 80, 200, 0.4);
-      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.07);
+      color: rgba(255, 255, 255, 0.8);
     }
 
     .btn-danger {
-      background: rgba(239, 68, 68, 0.15);
-      border: 1px solid rgba(239, 68, 68, 0.25);
-      color: #f87171;
+      background: rgba(220, 80, 70, 0.1);
+      border: 1px solid rgba(220, 80, 70, 0.18);
+      color: rgba(220, 110, 100, 0.8);
       padding: 6px 12px;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
     }
 
     .btn-danger:hover {
-      background: rgba(239, 68, 68, 0.25);
+      background: rgba(220, 80, 70, 0.18);
+      color: rgba(220, 110, 100, 1);
     }
 
     .main {
-      max-width: 800px;
+      max-width: 720px;
       margin: 0 auto;
       padding: 32px 24px;
     }
 
     .stats {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 16px;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
       margin-bottom: 32px;
     }
 
     .stat-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
       padding: 20px;
-      text-align: center;
     }
 
     .stat-number {
-      font-size: 2rem;
+      font-size: 1.75rem;
       font-weight: 600;
-      color: #c4a1f7;
-      font-family: 'Playfair Display', serif;
+      color: #d4bc82;
+      font-family: 'DM Serif Display', serif;
     }
 
     .stat-label {
-      font-size: 0.8rem;
-      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.3);
       margin-top: 4px;
       font-weight: 400;
     }
 
     .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .section-header h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem;
-      font-weight: 600;
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.6);
     }
 
     .prayers-list {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 10px;
     }
 
     .prayer-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
-      padding: 24px;
-      transition: all 0.2s ease;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 12px;
+      padding: 20px;
+      transition: border-color 0.2s ease;
     }
 
     .prayer-card:hover {
-      background: rgba(255, 255, 255, 0.07);
-      border-color: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.1);
     }
 
     .prayer-text {
       font-weight: 300;
-      line-height: 1.8;
-      color: rgba(255, 255, 255, 0.85);
-      font-size: 0.95rem;
+      line-height: 1.75;
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 0.9rem;
       white-space: pre-wrap;
       word-break: break-word;
     }
@@ -192,37 +179,32 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-top: 16px;
-      padding-top: 14px;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
     }
 
     .prayer-date {
-      font-size: 0.78rem;
-      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.73rem;
+      color: rgba(255, 255, 255, 0.2);
     }
 
     .empty-state {
       text-align: center;
       padding: 60px 20px;
-      color: rgba(255, 255, 255, 0.35);
-    }
-
-    .empty-state .icon {
-      font-size: 48px;
-      margin-bottom: 16px;
-      opacity: 0.6;
+      color: rgba(255, 255, 255, 0.25);
     }
 
     .empty-state h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem;
-      color: rgba(255, 255, 255, 0.5);
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.35);
       margin-bottom: 8px;
     }
 
     .empty-state p {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 300;
     }
 
@@ -231,9 +213,9 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
       z-index: 100;
       align-items: center;
       justify-content: center;
@@ -244,73 +226,75 @@
     }
 
     .modal {
-      background: linear-gradient(135deg, #1a1640 0%, #2d2560 100%);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 24px;
-      padding: 40px;
-      max-width: 400px;
+      background: #17171c;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 36px;
+      max-width: 380px;
       width: 90%;
       text-align: center;
     }
 
     .modal h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-      margin-bottom: 8px;
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.15rem;
+      font-weight: 400;
+      margin-bottom: 6px;
     }
 
     .modal p {
-      color: rgba(255, 255, 255, 0.5);
-      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.35);
+      font-size: 0.8rem;
       font-weight: 300;
       margin-bottom: 24px;
     }
 
     .qr-image {
       background: #fff;
-      border-radius: 16px;
-      padding: 16px;
+      border-radius: 12px;
+      padding: 14px;
       display: inline-block;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .qr-image img {
       display: block;
-      width: 200px;
-      height: 200px;
+      width: 180px;
+      height: 180px;
     }
 
     .url-display {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      padding: 12px 16px;
-      font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.4);
       word-break: break-all;
       margin-bottom: 20px;
     }
 
     .modal-actions {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       justify-content: center;
     }
 
     .loading {
       text-align: center;
       padding: 40px;
-      color: rgba(255, 255, 255, 0.4);
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.85rem;
     }
 
     .loading-spinner {
-      width: 32px;
-      height: 32px;
-      border: 3px solid rgba(255, 255, 255, 0.1);
-      border-top-color: #a855f7;
+      width: 24px;
+      height: 24px;
+      border: 2px solid rgba(255, 255, 255, 0.08);
+      border-top-color: #d4bc82;
       border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      margin: 0 auto 12px;
+      animation: spin 0.7s linear infinite;
+      margin: 0 auto 10px;
     }
 
     @keyframes spin {
@@ -319,15 +303,15 @@
 
     @media (max-width: 600px) {
       .header {
-        padding: 16px 20px;
+        padding: 14px 18px;
         flex-direction: column;
-        gap: 14px;
+        gap: 12px;
       }
       .main {
         padding: 24px 16px;
       }
       .prayer-card {
-        padding: 20px;
+        padding: 16px;
       }
       .modal {
         padding: 28px 20px;
@@ -338,16 +322,16 @@
 <body>
   <div class="header">
     <div class="header-left">
-      <h1>&#128591; Oraciones recibidas</h1>
+      <h1>Oraciones recibidas</h1>
       <span class="badge" id="count-badge">0</span>
     </div>
     <div class="header-actions">
       <button class="btn btn-ghost" onclick="showQR()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-        Compartir QR
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        QR
       </button>
       <button class="btn btn-ghost" onclick="loadPrayers()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
         Actualizar
       </button>
     </div>
@@ -357,7 +341,7 @@
     <div class="stats">
       <div class="stat-card">
         <div class="stat-number" id="total-count">-</div>
-        <div class="stat-label">Oraciones recibidas</div>
+        <div class="stat-label">Total</div>
       </div>
       <div class="stat-card">
         <div class="stat-number" id="today-count">-</div>
@@ -372,7 +356,7 @@
     <div id="prayers-container">
       <div class="loading">
         <div class="loading-spinner"></div>
-        Cargando oraciones...
+        Cargando...
       </div>
     </div>
   </div>
@@ -380,8 +364,8 @@
   <!-- QR Modal -->
   <div class="modal-overlay" id="qr-modal">
     <div class="modal">
-      <h3>Compartir enlace</h3>
-      <p>Escaneá el código QR o copiá el enlace para compartir</p>
+      <h3>Compartir</h3>
+      <p>Escaneá el QR o copiá el enlace</p>
       <div class="qr-image" id="qr-container">
         <div class="loading-spinner" style="margin:20px auto"></div>
       </div>
@@ -405,7 +389,7 @@
         renderPrayers();
         updateStats();
       } catch (err) {
-        container.innerHTML = '<div class="empty-state"><p>Error al cargar las oraciones.</p></div>';
+        container.innerHTML = '<div class="empty-state"><p>Error al cargar.</p></div>';
       }
     }
 
@@ -416,9 +400,8 @@
       if (prayers.length === 0) {
         container.innerHTML = `
           <div class="empty-state">
-            <div class="icon">&#128588;</div>
-            <h3>No hay oraciones todavía</h3>
-            <p>Compartí el enlace o QR para que las personas puedan enviar sus oraciones.</p>
+            <h3>Sin oraciones todavía</h3>
+            <p>Compartí el enlace para que las personas puedan escribir.</p>
           </div>`;
         return;
       }
@@ -486,7 +469,7 @@
         document.getElementById('qr-container').innerHTML = `<img src="${data.qr}" alt="QR Code">`;
         document.getElementById('url-display').textContent = data.url;
       } catch (err) {
-        document.getElementById('qr-container').innerHTML = '<p style="padding:20px;color:#999">Error al generar QR</p>';
+        document.getElementById('qr-container').innerHTML = '<p style="padding:20px;color:#666">Error al generar QR</p>';
       }
     }
 
@@ -504,12 +487,10 @@
       }
     }
 
-    // Close modal on overlay click
     document.getElementById('qr-modal').addEventListener('click', (e) => {
       if (e.target === e.currentTarget) closeQR();
     });
 
-    // Load on start
     loadPrayers();
   </script>
 </body>
