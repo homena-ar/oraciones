@@ -1,0 +1,15 @@
+{
+  "name": "oraciones-sin-respuestas",
+  "version": "1.0.0",
+  "description": "Web anónima para compartir oraciones sin respuestas",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "better-sqlite3": "^9.4.3",
+    "qrcode": "^1.5.3"
+  }
+}

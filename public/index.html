@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Las oraciones sin respuestas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at 20% 50%, rgba(120, 100, 200, 0.15) 0%, transparent 50%),
+                  radial-gradient(ellipse at 80% 20%, rgba(180, 140, 255, 0.1) 0%, transparent 50%),
+                  radial-gradient(ellipse at 50% 80%, rgba(100, 80, 180, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle var(--duration) infinite ease-in-out;
+      opacity: 0;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; }
+      50% { opacity: var(--max-opacity); }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 560px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 48px 40px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .icon {
+      text-align: center;
+      font-size: 40px;
+      margin-bottom: 8px;
+      opacity: 0.9;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      color: #fff;
+      font-size: 2rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 12px;
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      color: rgba(255, 255, 255, 0.5);
+      text-align: center;
+      font-size: 0.95rem;
+      font-weight: 300;
+      margin-bottom: 36px;
+      line-height: 1.6;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 180px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 20px;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.7;
+      resize: vertical;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    textarea::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    textarea:focus {
+      border-color: rgba(180, 140, 255, 0.5);
+      background: rgba(255, 255, 255, 0.09);
+      box-shadow: 0 0 30px rgba(140, 100, 220, 0.15);
+    }
+
+    .char-count {
+      text-align: right;
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.8rem;
+      margin-top: 8px;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px 32px;
+      background: linear-gradient(135deg, #7c5cbf 0%, #a855f7 100%);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      letter-spacing: 0.02em;
+      position: relative;
+      overflow: hidden;
+    }
+
+    button:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(120, 80, 200, 0.4);
+    }
+
+    button:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .success-message {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .success-message .check {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .success-message h2 {
+      font-family: 'Playfair Display', serif;
+      color: #fff;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .success-message p {
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 300;
+      font-size: 0.95rem;
+      margin-bottom: 28px;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 12px 28px;
+      width: auto;
+      display: inline-block;
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.12);
+      box-shadow: none;
+    }
+
+    .anonymous-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      color: rgba(255, 255, 255, 0.35);
+      font-size: 0.8rem;
+      margin-top: 20px;
+    }
+
+    .anonymous-badge svg {
+      width: 14px;
+      height: 14px;
+      fill: rgba(255, 255, 255, 0.35);
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 36px 24px;
+        border-radius: 20px;
+      }
+      h1 {
+        font-size: 1.6rem;
+      }
+      textarea {
+        min-height: 150px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" id="stars"></div>
+
+  <div class="container">
+    <div class="card">
+      <div id="form-view">
+        <div class="icon">&#128591;</div>
+        <h1>Las oraciones sin respuestas</h1>
+        <p class="subtitle">
+          Compartí de forma anónima esa oración que sentís que nunca tuvo respuesta.
+          Nadie sabrá quién sos.
+        </p>
+
+        <form id="prayer-form">
+          <div class="form-group">
+            <textarea
+              id="prayer-text"
+              placeholder="Escribí tu oración sin respuesta..."
+              maxlength="2000"
+              required
+            ></textarea>
+            <div class="char-count"><span id="char-count">0</span> / 2000</div>
+          </div>
+          <button type="submit" id="submit-btn">Enviar oración</button>
+        </form>
+
+        <div class="anonymous-badge">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+          100% anónimo
+        </div>
+      </div>
+
+      <div class="success-message" id="success-view">
+        <div class="check">&#10024;</div>
+        <h2>Oración enviada</h2>
+        <p>Tu oración fue recibida de forma anónima. Gracias por compartirla.</p>
+        <button class="btn-secondary" onclick="resetForm()">Escribir otra</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Generate stars
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 80; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.setProperty('--duration', (2 + Math.random() * 4) + 's');
+      star.style.setProperty('--max-opacity', (0.3 + Math.random() * 0.7));
+      star.style.animationDelay = Math.random() * 4 + 's';
+      starsContainer.appendChild(star);
+    }
+
+    const form = document.getElementById('prayer-form');
+    const textarea = document.getElementById('prayer-text');
+    const charCount = document.getElementById('char-count');
+    const submitBtn = document.getElementById('submit-btn');
+    const formView = document.getElementById('form-view');
+    const successView = document.getElementById('success-view');
+
+    textarea.addEventListener('input', () => {
+      charCount.textContent = textarea.value.length;
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const texto = textarea.value.trim();
+      if (!texto) return;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando...';
+
+      try {
+        const res = await fetch('/api/oraciones', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ texto })
+        });
+
+        if (res.ok) {
+          formView.style.display = 'none';
+          successView.style.display = 'block';
+        } else {
+          throw new Error('Error');
+        }
+      } catch (err) {
+        alert('Hubo un error al enviar. Intentá de nuevo.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Enviar oración';
+      }
+    });
+
+    function resetForm() {
+      textarea.value = '';
+      charCount.textContent = '0';
+      successView.style.display = 'none';
+      formView.style.display = 'block';
+      textarea.focus();
+    }
+  </script>
+</body>
+</html>
