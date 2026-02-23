@@ -15,7 +15,7 @@ db.exec(`
   CREATE TABLE IF NOT EXISTS oraciones (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     texto TEXT NOT NULL,
-    fecha TEXT NOT NULL DEFAULT (datetime('now', 'localtime'))
+    fecha TEXT NOT NULL DEFAULT (datetime('now'))
   )
 `);
 
@@ -31,8 +31,9 @@ app.post('/api/oraciones', (req, res) => {
     return res.status(400).json({ error: 'El texto no puede estar vacío' });
   }
   const trimmed = texto.trim().slice(0, 2000);
-  const stmt = db.prepare('INSERT INTO oraciones (texto) VALUES (?)');
-  stmt.run(trimmed);
+  const fecha = new Date().toISOString().slice(0, 19).replace('T', ' ');
+  const stmt = db.prepare('INSERT INTO oraciones (texto, fecha) VALUES (?, ?)');
+  stmt.run(trimmed, fecha);
   res.json({ ok: true });
 });
 

@@ -534,15 +534,21 @@
     function updateStats() {
       document.getElementById('total-count').textContent = prayers.length;
 
-      const today = new Date().toISOString().split('T')[0];
-      const todayCount = prayers.filter(p => p.fecha.startsWith(today)).length;
+      // Get today's date in Argentina timezone
+      const todayAR = new Date().toLocaleDateString('sv-SE', { timeZone: 'America/Argentina/Buenos_Aires' });
+      const todayCount = prayers.filter(p => {
+        const pDateAR = new Date(p.fecha + 'Z').toLocaleDateString('sv-SE', { timeZone: 'America/Argentina/Buenos_Aires' });
+        return pDateAR === todayAR;
+      }).length;
       document.getElementById('today-count').textContent = todayCount;
     }
 
     function formatDate(dateStr) {
       try {
-        const d = new Date(dateStr);
+        // Dates are stored as UTC in the DB
+        const d = new Date(dateStr + 'Z');
         return d.toLocaleDateString('es-AR', {
+          timeZone: 'America/Argentina/Buenos_Aires',
           day: 'numeric',
           month: 'short',
           year: 'numeric',
